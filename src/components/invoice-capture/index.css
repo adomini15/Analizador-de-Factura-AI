@@ -1,0 +1,53 @@
+.pdf-container {
+	display: flex;
+	justify-content: center;
+	gap: 5%;
+	padding: 2rem;
+}
+
+.pdfcam {
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+}
+
+.pdf-file-selecter {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5em;
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: #707070;
+	padding: 1.125em 0;
+	margin: 1.125em 0 0 0;
+	border: 1px dashed #dddddd;
+	cursor: no-drop;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.pdf-file-selecter.ondragover {
+	font-weight: bolder;
+	color: #2679bc;
+	border-color: #2679bc;
+	background: #cbe8ff;
+}
+
+.pdf-preview iframe {
+	border: none !important;
+	height: 100%;
+	width: 100%;
+}
+
+.pdf-preview .empty {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	font-size: 2.5rem;
+	background: #f4f4f4;
+	height: 100%;
+	width: 100%;
+}

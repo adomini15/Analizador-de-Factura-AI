@@ -1,13 +1,68 @@
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+		monospace;
+}
+
+.btn {
+	font-weight: bolder;
+	font-size: 0.875rem;
+	text-transform: capitalize;
+	padding: 0.5em;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	gap: 0.5em;
+}
+
+.btn:active {
+	color: white;
+}
+
+.btn-primary {
+	background-color: #0077ff;
+	color: hsl(0deg 0% 100%);
+	box-shadow: 0px 0px 1.5px #043a77;
+}
+
+.btn-primary:active {
+	background-color: #044997;
+}
+
+.btn-secondary {
+	background-color: #f4f4f4;
+	color: hsl(0, 0%, 39%);
+	box-shadow: 0px 0px 1.5px #636363;
+}
+
+.btn-secondary:active {
+	background: #555555;
+	box-shadow: inset 0px 0px 8px #2a2929;
+}
+
+.error {
+	color: #9e4e4e;
+	font-weight: 400;
+	font-size: 0.875rem;
+	padding: 0.75em 1.25em;
+	margin: 1em 0;
+	background-color: #faeded;
+	border-radius: 0.25em;
+	display: flex;
+	align-items: center;
+	gap: 1.5em;
 }

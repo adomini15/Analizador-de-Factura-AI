@@ -1,0 +1,103 @@
+.invoice-table .nav {
+	display: flex;
+	align-items: center;
+	justify-content: end;
+	gap: 0.5em;
+	font-weight: 200;
+	color: #fff;
+	background-color: white;
+	font-size: 0.75rem;
+	padding: 0.5em;
+	box-shadow: 0px 0px 3px gray;
+}
+
+.invoice-table .nav i {
+	font-size: 1.25em;
+	margin-left: 0.5em;
+}
+
+.invoice-table a {
+	background-color: #fefefe;
+	color: #5e5e5e;
+	box-shadow: 0px 0px 1px #7e7e7e;
+	text-decoration: none;
+	height: 100%;
+	padding: 0.5em 0.75em;
+	border-radius: 2px;
+	font-weight: 400;
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	text-transform: capitalize;
+}
+
+.invoice-table a:hover {
+	color: white;
+	background-color: #0a72c6;
+	box-shadow: 0px 1px 1px #085593;
+}
+
+.invoice-table a.active {
+	color: white;
+	background-color: #0963aa;
+	box-shadow: inset 2px 4px 4px #0a4a80;
+}
+
+.invoice-table table {
+	border-spacing: 0;
+	font-size: 0.75rem;
+	font-family: sans-serif;
+}
+
+.invoice-table table td {
+	padding: 0.5em 1em;
+	min-width: 100px;
+}
+
+.invoice-table table td div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.invoice-table table tbody td {
+	border-bottom: 1px solid #dfdfdf;
+	color: #545454;
+	background-color: whitesmoke;
+}
+
+.invoice-table table :focus {
+	font-weight: bolder;
+}
+
+.invoice-table table tbody td:focus {
+	color: white;
+	background-color: #085593;
+	outline-color: #0963aa;
+}
+
+.invoice-table table thead tr {
+	background-color: #c60a77;
+	border-radius: 50px;
+}
+
+.invoice-table table thead td {
+	color: #ffffff;
+	font-weight: 400;
+	text-transform: capitalize;
+}
+
+.invoice-table table thead td:focus {
+	background-color: hsl(325, 90%, 30%);
+	outline-color: #c60a77;
+	outline-width: 1rem;
+}
+
+.swap-hightlight {
+	box-shadow: inset 0px 1px 20px rgb(41 41 41 / 38%);
+}
+
+/* background: linear-gradient(to top, #ffffff, #e6e6e6); */
+/* background: linear-gradient(to top, #ececec,#ffffff 360%);
+
+box-shadow: 0px 1px 2px #b8b8b8; */
