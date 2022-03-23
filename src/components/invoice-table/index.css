@@ -11,6 +11,10 @@
 	box-shadow: 0px 0px 3px gray;
 }
 
+.invoice-table .canvas {
+	overflow: scroll;
+}
+
 .invoice-table .nav i {
 	font-size: 1.25em;
 	margin-left: 0.5em;
@@ -41,6 +45,10 @@
 	color: white;
 	background-color: #0963aa;
 	box-shadow: inset 2px 4px 4px #0a4a80;
+}
+
+.row td {
+	background-color: red;
 }
 
 .invoice-table table {

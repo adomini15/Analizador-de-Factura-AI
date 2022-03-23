@@ -13,6 +13,7 @@ import {
 	faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import "./index.css";
+import { useInvoice } from "../../context/store";
 
 const format = {
 	width: 350,
@@ -22,10 +23,9 @@ const format = {
 const InvoiceCapture = () => {
 	const [dragOverStatus, setDragOverStatus] = useState<boolean>(false);
 	const [invalidFileType, setInvalidFileType] = useState<string | null>(null);
-	const [serverResponseState, setServerResponseState] = useState(false);
-
 	const [imageSrc, setImageSrc] = useState<string | null>(null);
 	const [pdfFile, setPdfFile] = useState<File | null>(null);
+	const { sendInvoice, waiting } = useInvoice();
 
 	const { PDFBlob, save } = useSaveToPDF({
 		orientation: "portrait",
@@ -39,19 +39,7 @@ const InvoiceCapture = () => {
 		const formData = new FormData();
 		formData.append("PDF_FILE", pdfFile!);
 
-		setServerResponseState(true);
-
-		const res = await axios.post("http://localhost:5000/upload", formData, {
-			headers: {
-				"Content-Type": "application/pdf",
-			},
-		});
-
-		const { data } = res.data;
-
-		console.log(data);
-
-		setServerResponseState(false);
+		sendInvoice(formData);
 
 		setPdfFile(null);
 		setImageSrc(null);
@@ -142,7 +130,7 @@ const InvoiceCapture = () => {
 				)}
 			</div>
 			<div className="pdf-preview" style={{ width: format.width }}>
-				{imageSrc && !serverResponseState ? (
+				{imageSrc && !waiting ? (
 					<>
 						<iframe src={imageSrc!} />
 						<button
@@ -155,7 +143,7 @@ const InvoiceCapture = () => {
 					</>
 				) : (
 					<div className="empty">
-						{serverResponseState ? (
+						{waiting ? (
 							<>
 								<img
 									src="https://www.facturar.ec/wp-content/uploads/2020/11/loadingblue.gif"
