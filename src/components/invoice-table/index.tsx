@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./index.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,7 +13,6 @@ Sortable.mount(new Swap());
 type InvoiceCellPropsType = {
 	text: string;
 	swap?: boolean;
-	colIndex?: number;
 	onRemove?: Function;
 };
 
@@ -23,77 +22,103 @@ const InvoiceCell = ({ text, swap, onRemove }: InvoiceCellPropsType) => {
 			<div>
 				<div>{text}</div>
 
-				{swap ? (
-					<FontAwesomeIcon icon={faUpDownLeftRight}></FontAwesomeIcon>
-				) : (
-					onRemove && (
-						<div
-							onClick={({ currentTarget: target }) => {
-								onRemove?.(target.closest("td")?.cellIndex);
-							}}
-						>
-							<FontAwesomeIcon
-								icon={faRemove}
-								style={{ cursor: "pointer" }}
-							></FontAwesomeIcon>
-						</div>
-					)
-				)}
+				<div>
+					{swap ? (
+						<FontAwesomeIcon icon={faUpDownLeftRight}></FontAwesomeIcon>
+					) : (
+						onRemove && (
+							<div
+								onClick={({ currentTarget: target }) => {
+									onRemove?.(target.closest("td")?.cellIndex);
+								}}
+							>
+								<FontAwesomeIcon
+									icon={faRemove}
+									style={{ cursor: "pointer" }}
+								></FontAwesomeIcon>
+							</div>
+						)
+					)}
+				</div>
 			</div>
 		</td>
 	);
 };
 
+const initialData: any = {
+	data: {
+		Firstname: "Gian Carlos",
+		Lastname: "Perez Michel",
+		Age: "26",
+		Gender: "Male",
+	},
+};
+
+new Map();
+
 const InvoiceTable = () => {
 	const [swapCellState, setSwapCellState] = useState(false);
+	const [dataSet, setDataSet] = useState(initialData);
+	const refTable = useRef(null);
 
 	useEffect(() => {
-		if (swapCellState) {
-			const s1 = document.getElementById("s1");
-			const s2 = document.getElementById("s2");
+		const s1 = document.getElementById("s1");
+		const s2 = document.getElementById("s2");
 
-			if (s1 && s2) {
-				const a = new Sortable(s1, {
-					group: "sortable",
-					animation: 150,
-					swap: true,
-					swapClass: "swap-hightlight",
-				});
+		if (s1 && s2) {
+			new Sortable(s1, {
+				group: "sortable",
+				animation: 150,
+				swap: true,
+				swapClass: "swap-hightlight",
+			});
 
-				new Sortable(s2, {
-					group: "sortable",
-					animation: 150,
-					swap: true,
-					swapClass: "swap-hightlight",
-				});
-			}
+			new Sortable(s2, {
+				group: "sortable",
+				animation: 150,
+				swap: true,
+				swapClass: "swap-hightlight",
+			});
+		}
+	}, []);
+
+	useEffect(() => {
+		if (!swapCellState) {
+			updateDataSet();
 		}
 	}, [swapCellState, setSwapCellState]);
 
-	const removeColumn = (cellIndex: number) => {
-		const table = document.querySelector<HTMLTableElement>(".table table");
-
-		if (table) {
-			for (let i = 0; i < table.rows.length; i++) {
-				table.rows[i].cells[cellIndex].remove();
-			}
-		}
-	};
-
 	const addColumn = () => {
-		const table = document.querySelector<HTMLTableElement>(".table table");
-
-		if (table) {
-			const { rows } = table;
-
-			for (let i = rows.length - 1; i >= 0; i--) {
-				const count = rows[i].cells.length;
-				const newCell = rows[i].cells[count - 1].outerHTML;
-				rows[i].insertAdjacentHTML("beforeend", newCell);
-				rows[i].cells[count].focus();
-			}
-		}
+		setDataSet({ data: { ...dataSet, "[NEW COLUMN]": " " } });
 	};
+
+	const removeColumn = (cellIndex: number) => {
+		const key = Object.keys(dataSet)[cellIndex];
+
+		const newDataSet = dataSet;
+		delete newDataSet[key];
+
+		setDataSet(newDataSet);
+	};
+
+	const updateDataSet = () => {
+		const { rows } = refTable.current! as HTMLTableElement;
+
+		const newDataSet: any = {};
+
+		for (let i = 0; i < rows[0].cells.length; i++) {
+			const column = rows[0].cells[i].textContent as string;
+			const value = rows[1].cells[i].textContent as string;
+
+			newDataSet[column.replace(" ", "")] = value;
+		}
+
+		setDataSet({ data: newDataSet });
+	};
+
+	useEffect(() => {
+		console.log(dataSet);
+	}, [dataSet]);
 
 	return (
 		<div className="invoice-table">
@@ -114,38 +139,23 @@ const InvoiceTable = () => {
 			</div>
 			<div className="canvas">
 				<div className="table">
-					<table>
+					<table ref={refTable}>
 						<thead>
 							<tr id="s1">
-								<InvoiceCell
-									text="First Name"
-									swap={swapCellState}
-									colIndex={0}
-									onRemove={removeColumn}
-								/>
-								{/* <InvoiceCell
-									text="Last Name"
-									swap={swapCellState}
-									column={true}
-								/>
-								<InvoiceCell
-									text="Age Name"
-									swap={swapCellState}
-									column={true}
-								/>
-								<InvoiceCell
-									text="Gender Name"
-									swap={swapCellState}
-									column={true}
-								/> */}
+								{Object.keys(dataSet.data).map((col, index) => (
+									<InvoiceCell
+										text={`${col}`}
+										swap={swapCellState}
+										onRemove={removeColumn}
+									/>
+								))}
 							</tr>
 						</thead>
 						<tbody>
 							<tr id="s2">
-								<InvoiceCell text="Gian Carlos" swap={swapCellState} />
-								{/* <InvoiceCell text="Perez Michel" swap={swapCellState} />
-								<InvoiceCell text="24" swap={swapCellState} />
-								<InvoiceCell text="Male" swap={swapCellState} /> */}
+								{Object.values(dataSet.data).map((value, index) => (
+									<InvoiceCell text={`${value}`} swap={swapCellState} />
+								))}
 							</tr>
 						</tbody>
 					</table>

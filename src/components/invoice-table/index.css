@@ -97,6 +97,11 @@
 	box-shadow: inset 0px 1px 20px rgb(41 41 41 / 38%);
 }
 
+.invoice-table .canvas {
+	/* background-color: #fcfcfc; */
+	background: linear-gradient(to top, #ffffff, #e6e6e6);
+}
+
 /* background: linear-gradient(to top, #ffffff, #e6e6e6); */
 /* background: linear-gradient(to top, #ececec,#ffffff 360%);
 
